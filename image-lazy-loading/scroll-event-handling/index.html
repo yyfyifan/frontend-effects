@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    通过监听window的scroll事件，然后比较我们需要懒加载图片相对于视口的位置，一旦它快要出现在视口，我们则通过设置其src属性触发
+    图片加载
+
+    几个关键的属性：
+    1. 视口的高度：window.innerHeight
+    2. 目标图片距离视口顶部的距离：<element>.getBoundingClientRect().top
+      一旦 (2) 的值 小于等于 (1)，则代表图片出现在了视口中
+
+    基本思路如下：
+    1. 在页面中将需要Lazy Loading的<img>标签的src不设置，或者设置为placeholder图片，然后将真正目标图片的URL使用自定义属性记录
+      （例如data-src="..."），方便之后利用JS将其替换到src上
+    2. 注册window的scroll事件，并且在事件触发时查看懒加载图片和视口的相应位置关系
+    3. 一旦需要懒加载的图片出现在视口中，则替换其src属性去加载真正目标图片。然后取消观察该图片
+    
+    这种简单的实现方式会有一个缺点，就是一个普通的scroll操作中，该事件会触发几百次，性能会受到影响。所以要使用这种方法通常可以加上throttle
+  -->
+  <div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+  </div>
+  <!-- 用src指定placeholder图片占位，将真正图片存储在自定义属性 data-src 中 -->
+  <img src="../../assets/images/placeholder-600-400.svg" data-src="../../assets/images/random-image1.jpeg" alt="">
+  <p></p>
+  <img src="../../assets/images/placeholder-600-400.svg" data-src="../../assets/images/random-image2.jpeg" alt="">
+
+  <script>
+    const images = document.querySelectorAll("img");
+
+    window.addEventListener("scroll", event => {
+
+      images.forEach(image => {
+        if (image.getBoundingClientRect().top <= window.innerHeight) {
+          image.setAttribute("src", image.dataset.src)
+        }
+      })
+    })
+
+  </script>
+</body>
+
+</html>

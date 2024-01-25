@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    Web提供了一个API叫做'IntersectionObserver', 它可以用来“观察”页面上的某些元素和Viewport的重叠情况（相当于是否出现在Viewport中）
+    默认情况下，每当被观察的目标和 Viewport出现任何重叠（即进入视口），或者重叠消失（即离开视口），其会触发事件来告知
+
+    该事件会传递一些'IntersectionObserverEntry'来代表重叠变化的对象，我们可以通过它们来知道哪些图片进入了视口，哪些离开了视口.
+    并且该对象创建时还可以让我们通过参数指定距离视口多远距离代表“重叠”，可以让我们自定义何时开始加载图片
+
+    基本思路如下：
+    1. 在页面中将需要Lazy Loading的<img>标签的src不设置，或者设置为placeholder图片，然后将真正目标图片的URL使用自定义属性记录
+      （例如data-src="..."），方便之后利用JS将其替换到src上
+    2. 创建'IntersectionObserver' 并且让其观察我们的懒加载图片
+    3. 一旦需要懒加载的图片出现在视口中，则替换其src属性去加载真正目标图片。然后取消观察该图片
+
+
+  -->
+  <div>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis doloremque totam dolor nam quo voluptas,
+      sapiente tempore voluptatem asperiores quaerat maiores veritatis nobis pariatur unde atque sequi deserunt
+      consequatur modi.</p>
+  </div>
+  <!-- 用src指定placeholder图片占位，将真正图片存储在自定义属性 data-src 中 -->
+  <img src="../../assets/images/placeholder-600-400.svg" data-src="../../assets/images/random-image1.jpeg" alt="">
+  <p></p>
+  <img src="../../assets/images/placeholder-600-400.svg" data-src="../../assets/images/random-image2.jpeg" alt="">
+  <script>
+    const imgs = document.querySelectorAll("img");
+
+    // 创建'IntersectionObserver'时，第一个参数要传递一个callback函数
+    // 该函数会在这个'IntersectionObserver'对象观察的目标在Viewport出现/离开时触发
+    const intersectionObserver = new IntersectionObserver(entries => {
+      // entries是一个数组，每个数组元素是一个 IntersectionObserverEntry 对象
+      entries.forEach(entry => {
+        // 该对象的'isIntersecting' 属性表示是否重叠
+        // 所以为了实现lazy loading，我们将触发了这个事件，并且'isIntersecting'为true时的img的src设置成最终结果，替换placeholder
+        if (entry.isIntersecting) {
+          const visibleImage = entry.target; // 'target'属性能获取到观察到的目标元素，这里是img
+          visibleImage.setAttribute("src", visibleImage.dataset.src)
+          // 当图片已经触发加载后，就不需要再观察了
+          intersectionObserver.unobserve(visibleImage);
+        }
+      })
+    });
+
+
+    // 通过调用'observe'方法来指定要观察哪些对象. 这里我们观察所有img
+    imgs.forEach(img => {
+      intersectionObserver.observe(img)
+    })
+
+
+  </script>
+</body>
+
+</html>
