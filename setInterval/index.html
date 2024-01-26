@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 使用setTimeout来实现setInterval的效果
+    // 只不过没有办法clearInterval
+    const mySetInterval = (func, delay, ...args) => {
+      // 创建一个函数，用于递归调用自己来开启下一次的timeout
+      function start(...args) {
+        func(...args);
+        setTimeout(start, delay, ...args)
+      }
+      // 第一次执行也需要放在setTimeout执行，因为
+      // 1. 第一次执行是在delay之后
+      // 2. 第一次执行并不是同步的，而是先进入了MacroQueue后再被执行的
+      setTimeout(start, delay, ...args)
+
+    }
+
+    mySetInterval(() => { console.log(new Date()) }, 1000)
+
+  </script>
+</body>
+
+</html>
