@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container {
+      margin: 100px auto;
+      background-color: pink;
+      border: 1px solid black;
+      height: 50vh;
+      text-align: center;
+      font-size: 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: space-around;
+      gap: 1rem;
+    }
+
+    .countdown .time>span {
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    离活动开始还剩下
+    <div class="countdown">
+      <span class="time">
+        <span id="day">123</span>天
+      </span>
+      <span class="time">
+        <span id="hour">23</span>小时
+      </span>
+      <span class="time">
+        <span id="minute">44</span>分
+      </span>
+      <span class="time">
+        <span id="second">55</span>秒
+      </span>
+    </div>
+  </div>
+
+  <script>
+    const deadline = new Date("2025-01-26 00:00");
+    const day = document.querySelector("#day");
+    const hour = document.querySelector("#hour");
+    const minute = document.querySelector("#minute");
+    const second = document.querySelector("#second");
+
+    function countdown() {
+      const timeRemaining = deadline - new Date(); // 得到的是毫秒数
+      if (timeRemaining < 0) {
+        return;
+      }
+
+      const remainingSeconds = Math.floor(timeRemaining / 1000 % 60);
+      const remainingMinutes = Math.floor(timeRemaining / 1000 / 60 % 60)
+      const remainingHours = Math.floor(timeRemaining / 1000 / 60 / 60 % 24)
+      const remainingDays = Math.floor(timeRemaining / 1000 / 60 / 60 / 24)
+
+      second.innerHTML = remainingSeconds
+      minute.innerHTML = remainingMinutes
+      hour.innerHTML = remainingHours
+      day.innerHTML = remainingDays
+
+      setTimeout(countdown, 1000)
+    }
+    countdown();
+  </script>
+</body>
+
+</html>
