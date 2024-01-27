@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 绝对定位到左上角 */
+    .hamburger {
+      --viewport-margin: 1rem;
+      --bar-height: 5px;
+      --bar-width: 80%;
+      --bar-gap: 5px;
+    }
+
+
+    .hamburger .bars {
+      position: fixed;
+      top: var(--viewport-margin);
+      left: var(--viewport-margin);
+
+      height: 45px;
+      width: 50px;
+      cursor: pointer;
+      z-index: 100;
+
+      /* 用Flex来控制几条bars的排列 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: var(--bar-gap);
+    }
+
+
+    .hamburger .bars>span {
+      box-sizing: border-box;
+      height: var(--bar-height);
+      width: var(--bar-width);
+      background-color: black;
+      border-radius: 999px;
+
+      opacity: 1;
+      transition: transform 0.4s ease-in-out, opacity 0.2s;
+    }
+
+    /* 稍微要花一些时间的是这些bars具体transform位置的调整 */
+    input:checked+label>.bars>span:first-child {
+      transform: translateY(calc(2* var(--bar-gap))) rotate(45deg);
+      ;
+    }
+
+    input:checked+label>.bars>span:nth-child(2) {
+      transform: translateX(50%);
+      opacity: 0;
+    }
+
+    input:checked+label>.bars>span:last-child {
+      transform: translateY(calc(-2 * var(--bar-gap))) rotate(-45deg);
+    }
+
+    /* 侧面菜单栏 */
+    .menu {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 150px;
+      padding-top: 100px;
+      background-color: pink;
+      /* 默认隐藏在最左侧 */
+      transform: translateX(-150px);
+      transition: transform 0.5s ease-in-out;
+      z-index: 5;
+    }
+
+    /* 当显示状态时，将菜单平移出来 */
+    #open:checked~.menu {
+      transform: translateX(0px);
+      box-shadow: 0 0 5px black;
+    }
+
+    .menu ul {
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      gap: 15px;
+
+      list-style: none;
+      font-size: 24px;
+      padding: 0 10px;
+      text-align: right;
+    }
+
+    .menu ul li:hover {
+      background-color: white;
+      transition: background-color 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hamburger">
+    <input type="checkbox" name="" id="open" hidden>
+    <label for="open">
+      <div class="bars">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </label>
+
+    <aside class="menu">
+      <ul>
+        <li>Home</li>
+        <li>About</li>
+        <li>Account</li>
+        <li>Contact</li>
+        <li>System</li>
+      </ul>
+    </aside>
+  </div>
+</body>
+
+</html>
