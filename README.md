@@ -39,3 +39,13 @@ typeof new Object() // "object"
 typeof new Number(123) // "object"
 typeof Number("123") // "number"
 ```
+
+## 2. Understanding Some CSS Properties
+
+* `box-shadow`: <https://www.youtube.com/watch?v=jEuvbVVkcT0>
+* `text-shadow`: <https://www.youtube.com/watch?v=0nP67G-ZiWQ>
+* `border-radius`: <https://www.youtube.com/watch?v=4ALLynsZ0u0>
+
+## 3. Web API
+
+* Intersection Observer: <https://www.youtube.com/watch?v=2IbRtjez6ag&pp=ygUVaW50ZXJzZWN0aW9uIG9ic2VydmVy>
