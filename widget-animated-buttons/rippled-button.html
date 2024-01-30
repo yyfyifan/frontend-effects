@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      color: #fff;
+
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10rem;
+      min-height: 100vh;
+    }
+
+    .rippled-btn {
+      height: 50px;
+      width: 200px;
+      border: none;
+      background: linear-gradient(90deg, #0162c8, #55e7fc);
+      border-radius: 5px;
+      /* Relative 在这里很重要，它是为了在点击button后，在其中创建absolute定位
+        的子元素来实现ripple效果
+      */
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rippled-btn:active {
+      transform: scale(0.99);
+    }
+
+    .rippled-btn span {
+      position: absolute;
+      background-color: white;
+      height: 1px;
+      width: 1px;
+      border-radius: 50%;
+      /* 使用animation方式去执行ripple效果。
+        inifinite是确保在animation第一次执行完毕后，
+        不会使得这个span在被移除前突然恢复原始样式（10px X 10px的小圆圈）
+      */
+      animation: ripple 1s linear infinite;
+      /* 这个属性也很重要，它让span代表的ripple不会去响应事件
+        这样在多次点击button的时候，可以出现多个ripple
+      */
+      pointer-events: none;
+    }
+
+
+    @keyframes ripple {
+      from {
+        opacity: 0.5;
+      }
+
+      to {
+        opacity: 0;
+        transform: scale(500);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <button class="rippled-btn"></button>
+  <script>
+    const btn = document.querySelector(".rippled-btn");
+    btn.addEventListener("click", (e) => {
+      const span = document.createElement("span");
+      // 将ripple绝对定位到鼠标点击的位置
+      span.style.left = `${e.offsetX}px`;
+      span.style.top = `${e.offsetY}px`;
+      e.target.appendChild(span);
+
+      // ripple在被创建后就会去执行animation，然后在1秒中从dom中移除
+      setTimeout(() => {
+        span.remove();
+      }, 1000)
+    })
+  </script>
+</body>
+
+</html>
