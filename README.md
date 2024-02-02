@@ -44,7 +44,9 @@ typeof Number("123") // "number"
 
 * `box-shadow`: <https://www.youtube.com/watch?v=jEuvbVVkcT0>
 * `text-shadow`: <https://www.youtube.com/watch?v=0nP67G-ZiWQ>
-* `border-radius`: <https://www.youtube.com/watch?v=4ALLynsZ0u0>
+* `border-radius`:
+  * <https://www.youtube.com/watch?v=4ALLynsZ0u0>
+  * <https://www.bilibili.com/video/BV1sG411176D/?spm_id_from=333.337.search-card.all.click>
 
 ## 3. Web API
 
