@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 参考学习视频
+      https://www.youtube.com/watch?v=ex7jGbyFgpA&list=WL&index=4&t=126s&loop=0
+    */
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #25222a, #000);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    button {
+      --theme-color: #6001d2;
+
+      padding: 15px 30px;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      background-color: transparent;
+      color: var(--theme-color);
+      border: 1px solid var(--theme-color);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button:hover {
+      box-shadow: 0 0 10px var(--theme-color),
+        0 0 40px var(--theme-color),
+        0 0 80px var(--theme-color);
+      background-color: var(--theme-color);
+      color: wheat;
+    }
+  </style>
+</head>
+
+<body>
+  <button>Neon Button</button>
+</body>
+
+</html>
